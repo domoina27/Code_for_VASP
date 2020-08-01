@@ -1,24 +1,36 @@
 #!/bin/bash
 
+#!/bin/bash
 
-sed -i 's/Direct/S\nDirect/g' POSCAR   # replace Direct with S\nDirect
-sleep 2s  #sleep for 2 seconds
-line_t=$(wc -l < POSCAR)
-sed -n -e 11,$(expr $line_t)p POSCAR | awk '{print $3}' # read column 3 from line 11 to 116
+#generate a header from POSCAR
+head -n 8 POSCAR > poscar_header
 
+#generate a tail from POSCAR
+line_t=$(wc -l < POSCAR) #count lines in POSCAR
+tail -n $(expr $line_t - 8) POSCAR > poscar_tail
 
-file='table'
+#Add selective dynamic to header
+sed -i 's/Direct/S\nDirect/g' poscar_header   # replace Direct with S\nDirect
+
+#Add sufixes to tail
+touch poscar_tail2
+
+file='poscar_tail'
 lim=`echo 0.1 |bc`
 n=1
 while ISF= read -r line
 do
-   z=$(awk '{print $3}' table |sed -n $(expr $n)p)
+   z=$(awk '{print $3}' poscar_tail |sed -n $(expr $n)p)
    if [ $(echo "$z>$lim" |bc) -gt 0 ]
-       then
-            echo $z is greater than 0.1
-       else
-            echo "$z is smaller than 0.1"
+   then
+      echo "$line     T T T" >> poscar_tail2
+   else 
+      echo "$line     F F F" >> poscar_tail2
    fi
    n=$((n+1))
 done<$file
 
+#Remove POSCAR and combine header and tail
+rm POSCAR
+rm poscar_tail
+cat poscar_header poscar_tail2 > POSCAR

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#!/bin/bash
+echo You want to fix layers below what number?
+read myfloat
+
 
 #generate a header from POSCAR
 head -n 8 POSCAR > poscar_header
@@ -16,7 +18,7 @@ sed -i 's/Direct/S\nDirect/g' poscar_header   # replace Direct with S\nDirect
 touch poscar_tail2
 
 file='poscar_tail'
-lim=`echo 0.1 |bc`
+lim=`echo $myfloat |bc`
 n=1
 while ISF= read -r line
 do
@@ -24,8 +26,8 @@ do
    if [ $(echo "$z>$lim" |bc) -gt 0 ]
    then
       echo "$line     T T T" >> poscar_tail2
-   else 
-      echo "$line     F F F" >> poscar_tail2
+   else
+      echo "$line   F F F" >> poscar_tail2
    fi
    n=$((n+1))
 done<$file
@@ -34,3 +36,5 @@ done<$file
 rm POSCAR
 rm poscar_tail
 cat poscar_header poscar_tail2 > POSCAR
+rm poscar_header poscar_tail2
+#cat POSCAR

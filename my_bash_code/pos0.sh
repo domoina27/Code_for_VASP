@@ -1,12 +1,18 @@
 #!/bin/bash
 
-#Immobilizing z > 0.2 and 0.03 < x < 0.85
+#Immobilizing z > 0.2 and 0.04 < x < 0.85
+
+#example : pos0 POSCAR
+
+FILE=${1?Error: no name given}
+
+echo "Creating header and tail"
 
 #generate a header from POSCAR
-head -n 8 POSCAR > poscar_header
+head -n 8 $FILE > poscar_header
 
 #generate a tail from POSCAR
-line_t=$(wc -l < POSCAR) #count lines in POSCAR
+line_t=$(wc -l < $FILE) #count lines in POSCAR
 tail -n $(expr $line_t - 8) POSCAR > poscar_tail
 
 #Add selective dynamic to header
@@ -36,7 +42,7 @@ do
 done<$file
 
 #Remove POSCAR and combine header and tail
-rm POSCAR
+rm $FILE
 rm poscar_tail
 cat poscar_header poscar_tail2 > POSCAR
 rm poscar_header poscar_tail2

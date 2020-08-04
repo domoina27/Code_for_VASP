@@ -1,20 +1,25 @@
 #!/bin/bash
 
-echo You want to fix layers below what number?
-read myfloat
+# example : pos POSCAR 0.1
 
+FILE=${1?Error: no name given}
+
+myfloat=${2?Error: no name given}
+
+echo "Creating header and tail"
 
 #generate a header from POSCAR
-head -n 8 POSCAR > poscar_header
+head -n 8 $FILE > poscar_header
 
 #generate a tail from POSCAR
-line_t=$(wc -l < POSCAR) #count lines in POSCAR
+line_t=$(wc -l < $FILE) #count lines in POSCAR
 tail -n $(expr $line_t - 8) POSCAR > poscar_tail
 
 #Add selective dynamic to header
 sed -i 's/Direct/S\nDirect/g' poscar_header   # replace Direct with S\nDirect
 
 #Add sufixes to tail
+echo Adding suffixes
 touch poscar_tail2
 
 file='poscar_tail'
@@ -33,8 +38,8 @@ do
 done<$file
 
 #Remove POSCAR and combine header and tail
-rm POSCAR
+rm $FILE
 rm poscar_tail
 cat poscar_header poscar_tail2 > POSCAR
 rm poscar_header poscar_tail2
-#cat POSCAR
+echo done!

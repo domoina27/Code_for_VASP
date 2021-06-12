@@ -1,2 +1,5 @@
 # Command to restart MoM
 /etc/init.d/pbs_mom restart
+
+
+du -ks * | sort -nr | more

@@ -20,8 +20,6 @@ System =
    ISYM   =      2    0-nonsym 1-usesym
    LCORR  =      T    Harris-correction to forces
    POTIM  =     0.5     time-step for ion-motion
-   TEIN   =      5000.0    initial temperature
-   TEBEG  =      5000.0;   TEEND  =     5000.0 temperature during run
    SMASS  =    -1    Nose mass-parameter (am)
 
  Electronic Relaxation 2

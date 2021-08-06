@@ -10,6 +10,9 @@ System =
    NELM   =     200;   NELMIN= 2; NELMDL= -10     # of ELM steps
    EDIFF  =  0.5E-05   stopping-criterion for ELM
 
+NCORE = 20
+NPAR = 40
+
  Ionic Relaxation
    EDIFFG =  -0.1E-03   stopping-criterion for IOM
    NSW    =      700 number of steps for IOM
@@ -20,8 +23,6 @@ System =
    ISYM   =      2    0-nonsym 1-usesym
    LCORR  =      T    Harris-correction to forces
    POTIM  =      0     time-step for ion-motion
-   TEIN   =      5000.0    initial temperature
-   TEBEG  =      5000.0;   TEEND  =     5000.0 temperature during run
    SMASS  =    -1    Nose mass-parameter (am)
    ICHAIN =      2
    IOPT = 2

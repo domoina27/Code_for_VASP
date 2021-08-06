@@ -32,8 +32,8 @@ NPAR = 40
    LDIAG  =      T    sub-space diagonalisation
    LREAL  =      F     real-space projection
    LWAVE = F
-   LAECHG=.TRUE.
-   LCHARG = T
+   LAECHG=.FALSE.
+   LCHARG = F
 
  DOS related values:
    EMIN   =  10.00;   EMAX   =-10.00  energy-range for DOS
